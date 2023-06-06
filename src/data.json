@@ -1,0 +1,22 @@
+[{
+    "id":1,
+    "task":"dormir",
+    "completed":false
+    },{
+        "id":2,
+        "task":"Salir",
+        "completed":false
+         
+    },{
+        "id":3,
+        "task":"lavar",
+        "completed":true
+        
+    },{
+        "id":4,
+        "task":"ejercicio",
+        "completed":false
+        
+    }
+    
+ ]

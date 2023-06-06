@@ -1,22 +1,28 @@
 import { Lista } from "./Lista"
 
-function TaskList(props){
+import React from 'react';
 
-    const { list }=props;
+function TaskList({todos,onComplete,onDeleteItem}){
 
-return <div>
-    <input></input> <button className="boton2">Agregar</button> 
-    <p>
-        { list.map((movie)=>(
-            <Lista name={movie.name}/>
-         ) )
-            
-        }
-    </p>
+   
 
+return (
+    <div>
     
-     <button className="boton">Clear</button>
-</div>
+        {
 
+       todos.map((todo,index)=>(
+          <Lista key={`todo-${index}`}todo={todo} onComplete={onComplete} onDeleteItem={onDeleteItem}/>             
+
+        ))
+       
+        /*todos.map((todo,index)=>{
+          return <div>{todo.task}</div>
+        })*/
+
+        }
+
+         </div>
+)
 }
 export default TaskList
