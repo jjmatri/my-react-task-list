@@ -18,7 +18,7 @@ export const Lista=({todo,onComplete,onDeleteItem})=>{
        onChange={() =>onComplete(todo.id,todo.task,todo.completed)}/>
        
       {todo.task}
-       <button className="add-btn" onClick={() =>onDeleteItem(todo.id)}>x</button>
+       <button className="add-btn" onClick={() =>onDeleteItem(todo.id,todo.task,todo.completed)}>x</button>
        </div>
 );
 
