@@ -4,80 +4,98 @@ import TaskList from './componentes/TaskList'
 import { useState, useEffect } from 'react'
 import data from './data.json';
 import Todoform from './componentes/Todoform';
+//import  { Editartask }  from "./componentes/Editartask";
 
-const listar = [
-  { name: "volver al fututo" },
-  { name: "volver al fututo 2" },
-  { name: "volver al fututo 4" },
-
-]
 
 function App() {
 
-  //nos permite cargar el data.json
-  const [todos, setTodos] = useState(data);
+  const [tasItems, setTasItems] = useState([])
+  
 
-  //metodo para para que le aparesca la raya a la tarea
-  const onComplete = (id, task, completed) => {
+  //metodo para cambiar el estado de la tarea
+  const updatetarea =task => {
+  setTasItems(
 
-
-    setTodos(todos.map((todo) => {
-
-      return todo.id === Number(id) ? { ...todo, completed: !todo.completed } : { ...todo }
-
-
-
-    }))
-    window.localStorage.setItem('id', id);
-    window.localStorage.setItem('task', task);
-    window.localStorage.setItem('completado', completed);
-
-  }
-  //metodo eliminar
-  const onDeleteItem = (id, task, completed) => {
-
-    setTodos([...todos].filter(todo => todo.id !== id))
-
-    window.localStorage.setItem('id', id);
-    window.localStorage.setItem('tarea', task);
-    window.localStorage.setItem('completado', completed);
-
+    tasItems.map(t=>(t.name == task.name ) ? {...t,done: !t.done}:t )
+ 
+  );
+    
   }
 
   //metod para agregar
-  const addTodo = (newTodo) => {
-    console.log('newTodo', newTodo);
-    let newItem = { id: +new Date, task: newTodo, completed: false };
-
-    setTodos([...todos, newItem]);
-    window.localStorage.setItem('id', id);
-    window.localStorage.setItem('tarea', newTodo);
-    window.localStorage.setItem('completado',false);
-
+  const addTodo = (newTodo,id) => {
+    //let id=1,i=0;
+    
+   console.log('tarea'+id);
+   //console.log('id'+tasItems[i].id);
+     
+    /*if(tasItems.length > 0) {
+      id = tasItems[i].id + 1
+      
+    }*/
+         
+    setTasItems([...tasItems, { id:id,name: newTodo, done: false ,isEditing: false}])
+  
+    
   }
 
+  
+  //metodo eliminar
+  const onDeleteItem = (id) => {
+  
+    console.log('id tarea'+id);
+     setTasItems(tasItems.filter(task =>task.id !== id))
+      //setTasItems([...tasItems].filter(task => task.name==!nam && task.don==!don))
+
+   
+  }
+    //editar tarea
+  const editaItem = (id) => {
+  
+    console.log('editar una tarea '+id);
+    setTasItems(
+      tasItems.map((todo) =>
+        todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo
+      )
+    );
+   
+  }
+  const editTask = (name, id) => {
+    setTasItems(
+      tasItems.map((todo) =>
+        todo.id === id ? { ...todo, name, isEditing: !todo.isEditing } : todo
+      )
+    );
+  };
+
+
   useEffect(() => {
-    let c = localStorage.getItem('task')
-    if (c) {
-      setTodos(JSON.parse(c))
+    // window.localStorage.setItem('tareas', JSON.stringify(data));
+    //alert('cambio jaja');
+    let data = localStorage.getItem('tasks')
+    if (data) {
+      setTasItems(JSON.parse(data))
 
     }
 
   }, [])
 
+
   useEffect(() => {
-    window.localStorage.setItem('tareas', JSON.stringify(data));
+    // window.localStorage.setItem('tareas', JSON.stringify(data));
+    //alert('cambio jaja');
+    localStorage.setItem('tasks', JSON.stringify(tasItems))
 
-  }, [data])
+  }, [tasItems])
 
-  console.log(todos);
   return (
 
     <div className="container">
       <Header />
       <Todoform addTodo={addTodo} />
-
-      <TaskList todos={todos} onComplete={onComplete} onDeleteItem={onDeleteItem} />
+      <TaskList tasks={tasItems} updatetarea={updatetarea} onDeleteItem={onDeleteItem} editaItem={editaItem} editTask={editTask}/>
+      {/*<Editartask  editaItem={editaItem}/>*/}
+      {/* <TaskList todos={todos} onComplete={onComplete} onDeleteItem={onDeleteItem} />*/}
     </div>
 
 

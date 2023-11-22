@@ -1,26 +1,55 @@
-export const Lista=({todo,onComplete,onDeleteItem})=>{
+export const Lista = ({ task, updatetarea,onDeleteItem,editaItem }) => {
 
-    const getStyle =()=>{
+    const getStyle = () => {
 
         return {
-            textDecoration: todo.completed  ? 'line-through' :'none',
-            margin: '30px',
+            textDecoration: task.done ? 'line-through' : 'none',
+            margin: '10px',
             border: '2px solid #ffff00',
-            backgroundcolor: '#CCF7E3'
-            
+            backgroundcolor: '#CCF7E3',
+            padding: '6px',
+        
+
         }
     }
 
-    return(
-      // <div style = { getStyle() } >
-      <div style = { getStyle() } >
-       <input type ='checkbox' checked={todo.completed}
-       onChange={() =>onComplete(todo.id,todo.task,todo.completed)}/>
-       
-      {todo.task}
-       <button className="add-btn" onClick={() =>onDeleteItem(todo.id,todo.task,todo.completed)}>x</button>
-       </div>
-);
+    return (
+
+        <div style={getStyle()}>
+
+            <input
+                type="checkbox"
+                checked={task.done}
+                onChange={() => updatetarea(task)}
+
+            />
+
+            {task.name}
+            
+            <button className="add-btn" onClick={() =>onDeleteItem(task.id)}>x</button>
+            <button className="add-btn2" onClick={() =>editaItem(task.id)}>editar</button>
+
+
+        </div>
+
+
+        /*<tr style={getStyle()}>
+            <td>
+            <input 
+            type="checkbox"
+            checked={task.done}
+            onChange={() => updatetarea(task)}
+        
+            />
+            
+         {task.name}
+         <button className="add-btn" >x</button>
+            </td>
+            
+        </tr>
+         */
+
+    );
 
 
 

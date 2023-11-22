@@ -1,28 +1,46 @@
+import { Editartask } from "./Editartask";
 import { Lista } from "./Lista"
+//import { Editartas } from "./Editartask"
 
 import React from 'react';
 
-function TaskList({todos,onComplete,onDeleteItem}){
+function TaskList({ tasks,updatetarea,onDeleteItem,editaItem,editTask }) {
 
+  
+  return (
    
+     <div>
 
-return (
-    <div>
-    
         {
+          tasks.map(task => (
+          task.isEditing ?(
+            <Editartask task={task} editaItem={editTask} editTask={editTask} />
 
-       todos.map((todo,index)=>(
-          <Lista key={`todo-${index}`}todo={todo} onComplete={onComplete} onDeleteItem={onDeleteItem}/>             
-
-        ))
-       
-        /*todos.map((todo,index)=>{
-          return <div>{todo.task}</div>
-        })*/
+          ):(
+            <Lista task={task} key={task.name} updatetarea={updatetarea} onDeleteItem={onDeleteItem} editaItem={editaItem}/>          
+          )))
 
         }
+        </div>
 
-         </div>
-)
+   /* <table>
+      <thead>
+
+        <tr></tr>
+      </thead>
+      <tbody>
+        {
+          tasks.map(task => (
+            <Lista task={task} key={task.name} updatetarea={updatetarea}/>          
+          ))
+
+        }
+      </tbody>
+
+    </table>
+*/
+
+
+  )
 }
 export default TaskList
