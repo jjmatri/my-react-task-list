@@ -1,73 +1,43 @@
 #root {
-  max-width: 1200px;
+  width: auto;
   margin: 0 auto;
-  /*padding: -4rem;*/
-  /*text-align: center;*/
+  padding: 2rem;
+  text-align: center;
 }
 
-.container{
-  
-    margin: 50px;;
-    width: 100%;
-    border: 1px solid #73ad21;
-     background-color: #32746a;
-    padding: 10px;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
 }
-.boton{
-
-  background-color: #ff0000;
-  display: flex;
-  
-     
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
-/*.linea{
-
-  text-decoration-line:todo.completed ? 'line-through' :'none',
-      
-            border: '1px solid #ffffff',
-            background-color: ''
-            
-}*/
-
-.add-btn{
-
-  float: right;
-  background-color: #ff0000;
-  color: #ffffff;
-  padding:2px 10px;
-}
-.add-btn2{
-
-  float: right;
-  background-color: #73ad21;
-  color: #ffffff;
-  padding:2px 10px;
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.boton2{
 
-  background-color: #0000ff;
-  margin: 20px 20px;
-}
-h2{
-text-align: center;
-
-}
-input{
-  align-items: center;
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.todo-input {
-  outline: none;
-  background: none;
-  border: 1px solid #8758ff;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  width: 200px;
-  color: #fff;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
+
 .card {
   padding: 2em;
 }
 
+.read-the-docs {
+  color: #888;
+}

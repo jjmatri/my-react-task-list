@@ -1,43 +1,77 @@
-import { useState } from "react"
+// src/components/TodoForm.jsx
+import React, { useState, useEffect } from 'react';
+import { Box, Button, FormControl, FormHelperText, Input, Textarea } from '@chakra-ui/react';
 
-function Todoform({addTodo}){
+const TodoForm = ({ addTodo }) => {
+  const [task, setTask] = useState('');
+  const [description, setDescription] = useState('');
 
-    const [userInput,setUserInput]=useState('');
-    const [counter, setCounter] = useState (0);
-  
-    /*const handleOnChange = (e) =>{
-       setUserInput(e.currentTarget.value);
-       
-    }*/
-   
-    const handleSubmit =(e) =>{
-     e.preventDefault();
-     setCounter((counter) => counter + 1)
-    // if(userInput.trim()!==''){
-     addTodo(userInput,counter);
-    
-     
-     setUserInput("");
-     
-     //}
 
+  useEffect(() => {
+    // Cargar tareas desde localStorage al montar el componente
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      const parsedTasks = JSON.parse(storedTasks);
+      // Puedes hacer algo con las tareas cargadas si es necesario
     }
+  }, []);
 
-    return( 
-    <div style = {{margin:20}}>
-         <form onSubmit={handleSubmit}>
-                <input type = "text"
-                 placeholder="Enter new task"
-                 value={userInput} 
-                 /*Change= {handleOnChange}*/
-                  
-                 onChange= {(e)=>setUserInput(e.target.value)}/>
-                
-                <button className="boton2">+</button>
+  useEffect(() => {
+    // Guardar tareas en localStorage cuando cambian
+    localStorage.setItem(
+      'tasks',
+      JSON.stringify([
+        // Puedes incluir el estado actual de task y description si es necesario
+      ])
+    );
+  }, [/* Dependencias que activarán el efecto */]);
 
-         </form>
-    </div>
-    )
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (task.trim().length >= 3) {
+      const newTask = {
+        id: Math.random().toString(36).substr(2, 9),
+        name: task,
+        description: description,
+        done: false,
+      };
+
+      // Agregar la nueva tarea utilizando la función prop proporcionada
+      addTodo(newTask);
+
+      // Limpiar los campos después de agregar la tarea
+      setTask('');
+      setDescription('');
+
+      // Obtener las tareas actuales del localStorage
+      const storedTasks = localStorage.getItem('tasks');
+      const currentTasks = storedTasks ? JSON.parse(storedTasks) : [];
+
+      // Actualizar las tareas en el localStorage
+      localStorage.setItem('tasks', JSON.stringify([...currentTasks, newTask]));
+    } else {
+      alert('El nombre de la tarea debe tener al menos 3 caracteres.');
     }
-    
-    export default Todoform
+  };
+
+  return (
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <FormControl isRequired mb="4">
+          <FormHelperText>Nombre de la tarea </FormHelperText>
+          <Input type="text" value={task} onChange={(e) => setTask(e.target.value)} />
+        </FormControl>
+        <FormControl mb="4">
+          <FormHelperText>Descripción</FormHelperText>
+          <Textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+        </FormControl>
+        <Button type="submit" colorScheme="teal">
+          Agregar Tarea
+        </Button>
+      </form>
+    </Box>
+  );
+};
+
+export default TodoForm;

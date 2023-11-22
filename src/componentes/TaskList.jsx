@@ -1,46 +1,62 @@
-import { Editartask } from "./Editartask";
-import { Lista } from "./Lista"
-//import { Editartas } from "./Editartask"
+// TaskList.jsx
+import React, { useState } from 'react';
+import { VStack, Text, Checkbox, Button, Input, HStack } from '@chakra-ui/react';
 
-import React from 'react';
+const TaskList = ({ tasks, toggleTask, deleteTask, editTask, clearCompleted }) => {
+  const [editingTask, setEditingTask] = useState(null);
+  const [editedTaskName, setEditedTaskName] = useState('');
 
-function TaskList({ tasks,updatetarea,onDeleteItem,editaItem,editTask }) {
+  const handleEditClick = (task) => {
+    setEditingTask(task);
+    setEditedTaskName(task.name);
+  };
 
-  
+  const handleEditInputChange = (event) => {
+    setEditedTaskName(event.target.value);
+  };
+
+  const handleDoneClick = () => {
+    if (editedTaskName.length >= 3) {
+      editTask(editingTask.id, editedTaskName);
+      setEditingTask(null);
+    }
+  };
+
   return (
-   
-     <div>
+    <VStack align="start" spacing="2" mt="4">
+      {tasks.map((task) => (
+        <React.Fragment key={task.id}>
+          {editingTask?.id === task.id ? (
+            // Mostrar campo de edición
+            <HStack>
+              <Input
+                value={editedTaskName}
+                onChange={handleEditInputChange}
+                placeholder="Nuevo nombre"
+              />
+              <Button size="sm" onClick={handleDoneClick}>
+                Hecho
+              </Button>
+            </HStack>
+          ) : (
+            // Mostrar tarea normal con botón de edición
+            <HStack align="center">
+              <Checkbox isChecked={task.done} onChange={() => toggleTask(task.id)} />
+              <Text textDecoration={task.done ? 'line-through' : 'none'}>
+                {task.name}
+              </Text>
+              <Button size="sm" onClick={() => handleEditClick(task)}>
+                Editar
+              </Button>
+              <Button size="sm" onClick={() => deleteTask(task.id)}>
+                Eliminar
+              </Button>
+            </HStack>
+          )}
+        </React.Fragment>
+      ))}
+    </VStack>
+  );
+};
 
-        {
-          tasks.map(task => (
-          task.isEditing ?(
-            <Editartask task={task} editaItem={editTask} editTask={editTask} />
-
-          ):(
-            <Lista task={task} key={task.name} updatetarea={updatetarea} onDeleteItem={onDeleteItem} editaItem={editaItem}/>          
-          )))
-
-        }
-        </div>
-
-   /* <table>
-      <thead>
-
-        <tr></tr>
-      </thead>
-      <tbody>
-        {
-          tasks.map(task => (
-            <Lista task={task} key={task.name} updatetarea={updatetarea}/>          
-          ))
-
-        }
-      </tbody>
-
-    </table>
-*/
-
-
-  )
-}
-export default TaskList
+export default TaskList;

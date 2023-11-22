@@ -1,56 +1,26 @@
-export const Lista = ({ task, updatetarea,onDeleteItem,editaItem }) => {
+// src/components/Lista.jsx
+import React from 'react';
+import { List, ListItem, Button } from '@chakra-ui/react';
 
-    const getStyle = () => {
-
-        return {
-            textDecoration: task.done ? 'line-through' : 'none',
-            margin: '10px',
-            border: '2px solid #ffff00',
-            backgroundcolor: '#CCF7E3',
-            padding: '6px',
-        
-
-        }
-    }
-
-    return (
-
-        <div style={getStyle()}>
-
-            <input
-                type="checkbox"
-                checked={task.done}
-                onChange={() => updatetarea(task)}
-
-            />
-
-            {task.name}
-            
-            <button className="add-btn" onClick={() =>onDeleteItem(task.id)}>x</button>
-            <button className="add-btn2" onClick={() =>editaItem(task.id)}>editar</button>
-
-
-        </div>
-
-
-        /*<tr style={getStyle()}>
-            <td>
-            <input 
+const Lista = ({ tasks, toggleTask, deleteTask, editTask }) => {
+  return (
+    <List spacing={3} mt="4">
+      {tasks.map((task) => (
+        <ListItem key={task.id}>
+          <input
             type="checkbox"
             checked={task.done}
-            onChange={() => updatetarea(task)}
-        
-            />
-            
-         {task.name}
-         <button className="add-btn" >x</button>
-            </td>
-            
-        </tr>
-         */
+            onChange={() => toggleTask(task.id)}
+          />
+          <span style={{ textDecoration: task.done ? 'line-through' : 'none' }}>
+            {task.name}
+          </span>
+          <Button onClick={() => editTask(task.id)}>Editar</Button>
+          <Button onClick={() => deleteTask(task.id)}>Eliminar</Button>
+        </ListItem>
+      ))}
+    </List>
+  );
+};
 
-    );
-
-
-
-}
+export default Lista;

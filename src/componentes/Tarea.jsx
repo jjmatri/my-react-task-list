@@ -1,4 +1,5 @@
-// src/App.jsx
+//import React from 'react';
+
 import React, { useState } from 'react';
 import {
   ChakraProvider,
@@ -8,10 +9,14 @@ import {
   ColorModeProvider,
 } from '@chakra-ui/react';
 import { BrowserRouter , Routes, Route } from 'react-router-dom';
-import Menu from './componentes/Menu';
-import Tarea from './componentes/Tarea';
-import SobreNosotros from './componentes/SobreNosotros';
-import  Home  from "./componentes/Home";
+import BotonClear from './BotonClear';
+import Header from './Hearder';
+import Menu from './Menu';
+import TaskList from './TaskList';
+import TodoForm from './Todoform';
+//import About from './About';
+import Form from './SobreNosotros';
+import  Home  from "./Home";
 
 // Define el tema de Chakra UI
 const theme = extendTheme({
@@ -22,7 +27,7 @@ const theme = extendTheme({
 });
 
 // Componente principal de la aplicación
-function App() {
+function Tarea() {
   // Estado para gestionar la lista de tareas
   const [tasks, setTasks] = useState([]);
 
@@ -61,21 +66,24 @@ function App() {
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <CSSReset />
       <ColorModeProvider>
-      <BrowserRouter>
-      <Menu/>
-        <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/tarea" element={<Tarea/>} />
-        <Route path="/sobre-nos" element={<SobreNosotros/>} />
-       
-          </Routes>
-         
-          </BrowserRouter>
-         
+      
+      
+          <Header />
+          <TodoForm addTodo={addTodo} />
+          <TaskList
+            tasks={tasks}
+            toggleTask={toggleTask}
+            deleteTask={deleteTask}
+            editTask={editTask}
+            clearCompleted={clearCompleted}
+          />
+          <BotonClear clearCompleted={clearCompleted} />
+        
       </ColorModeProvider>
     </ChakraProvider>
   );
 }
 
-// Exporta el componente principal
-export default App;
+
+export default Tarea;
+

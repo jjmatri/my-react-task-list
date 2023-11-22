@@ -1,18 +1,51 @@
-import React, {useState} from 'react'
+// EditarTask.jsx
+import React, { useState } from 'react';
+import { Input, Button, Flex } from '@chakra-ui/react';
 
-export const Editartask = ({task,editaItem, editTask}) => {
-    const [value, setValue] = useState(task.name);
+const EditarTask = ({ task, editTask }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTaskName, setEditedTaskName] = useState(task?.name || '');
 
-    const handleSubmit = (e) => {
-      // prevent default action
-        e.preventDefault();
-        // edit todo
-        editaItem(value, task.id);
-      };
+  const handleEditInputChange = (event) => {
+    setEditedTaskName(event.target.value);
+  };
+
+  const handleDoneClick = () => {
+    const newName = editedTaskName.trim();
+
+    if (newName.length >= 3) {
+      editTask(task.id, newName);
+      setIsEditing(false);
+    } else {
+      alert('El nombre de la tarea debe tener al menos 3 caracteres.');
+    }
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
   return (
-    <form onSubmit={handleSubmit} >
-    <input type="text" value={value} onChange={(e) => setValue(e.target.value)} className="todo-input" placeholder='Update task' />
-    <button type="submit" className='.add-btn'>Edit Task</button>
-  </form>
-  )
-}
+    <Flex mt="2">
+      {isEditing ? (
+        <>
+          <Input
+            value={editedTaskName}
+            onChange={handleEditInputChange}
+            placeholder="Nuevo nombre de tarea"
+            mr="2"
+          />
+          <Button onClick={handleDoneClick} colorScheme="blue" size="sm">
+            Hecho
+          </Button>
+        </>
+      ) : (
+        <Button onClick={handleEditClick} colorScheme="blue" size="sm">
+          Editar
+        </Button>
+      )}
+    </Flex>
+  );
+};
+
+export default EditarTask;
