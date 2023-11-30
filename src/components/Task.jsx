@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { taskListContext } from "../pages/TareasPage";
-import { Box, Text, Spacer, Button, Input } from "@chakra-ui/react"
+import { Box, Text, Spacer, Button, Input,Checkbox } from "@chakra-ui/react"
 
 export function Task(props) {
 
@@ -28,8 +28,15 @@ export function Task(props) {
         )
     }
     return (
-        <Box bgColor="green.100" margin="2" padding="4" borderRadius="2xl" display="flex" alignItems="center" marginBottom="0">
-            <Text marginLeft="2" color="gray.500">{task.task}</Text>
+        <Box bgColor="green.300" margin="2" padding="4" borderRadius="2xl" display="flex" alignItems="center" marginBottom="0">
+           
+            <Checkbox size='md' colorScheme='green' >          
+               
+
+
+         </Checkbox>
+
+            <Text  marginLeft="2" color="white.500" >{task.task}</Text>
             <Spacer />
             <Button colorScheme='green' variant="ghost" onClick={() => {
                 setEdit(true);
