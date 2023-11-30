@@ -1,7 +1,8 @@
 // ThemeToggle.jsx
 import React from 'react';
-import { useColorMode, IconButton, Tooltip } from '@chakra-ui/react';
+import { useColorMode, IconButton, Tooltip,Icon } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+//import { MoonIcon, SunIcon } from '@react-icons/md';
 
 const ThemeToggle = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -9,8 +10,8 @@ const ThemeToggle = () => {
   return (
     <Tooltip label={`Cambiar a modo ${colorMode === 'light' ? 'oscuro' : 'claro'}`}>
       <IconButton
-        icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-        onClick={toggleColorMode}
+        Icon ={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+        onClick={toggleColorMode} color="red" 
       />
     </Tooltip>
   );
