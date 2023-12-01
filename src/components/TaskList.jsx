@@ -13,7 +13,7 @@ export function TaskList() {
 
             <Box w="80vh" display="flex" justifyContent="center" bg="green.20" borderRadius="3xl" padding="4" flexDirection="column">
                 <Header />
-                <Box display="flex" justifyContent="center" flexDirection="column">
+                <Box display="flex" justifyContent="center" flexDirection="column" color="red">
                
                     {taskList.map((task) => (
                         
